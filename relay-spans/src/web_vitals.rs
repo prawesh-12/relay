@@ -385,18 +385,21 @@ mod tests {
         let metrics = extract_web_vital_metrics(&span).unwrap();
         assert_eq!(metrics.len(), 1);
 
-        let attributes = metrics[0].attributes.value().unwrap();
-        assert_eq!(
-            attributes
-                .get_value(USER__GEO__COUNTRY_CODE)
-                .and_then(|v| v.as_str()),
-            Some("AT")
-        );
-        assert_eq!(
-            attributes
-                .get_value(USER__GEO__SUBREGION)
-                .and_then(|v| v.as_str()),
-            Some("155")
-        );
+        insta::assert_json_snapshot!(SerializableAnnotated(&metrics[0].attributes), @r#"
+        {
+          "sentry.metric.source": {
+            "type": "string",
+            "value": "span"
+          },
+          "user.geo.country_code": {
+            "type": "string",
+            "value": "AT"
+          },
+          "user.geo.subregion": {
+            "type": "string",
+            "value": "155"
+          }
+        }
+        "#);
     }
 }
