@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add the `error` span status. ([#6646](https://github.com/getsentry/relay/pull/6646))
 - Remove the `organizations:relay-automatic-json-expansion` feature from project config. ([#6518](https://github.com/getsentry/relay/pull/6518))
 
 ## 0.10.1
